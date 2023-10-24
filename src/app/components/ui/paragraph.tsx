@@ -1,5 +1,5 @@
 import { FC, forwardRef, HTMLAttributes }  from 'react';
-import { VariantProps, cva} from 'class-variance-authority';
+import { VariantProps, cva } from 'class-variance-authority';
 
 
 const paragraphvariants = cva(
