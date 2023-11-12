@@ -1,8 +1,9 @@
 import { Sign } from "crypto";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { FC } from "react";
-import { buttonVariants } from "./ui/Button";
+import { getServerSession } from "next-auth";
+import { buttonVariants } from "@/ui/Button";
+import SignInButton from "@/components/SignInButton";
+import SignOutButton from "@/components/SignOutButton";
 
 interface NavbarProps {}
 
@@ -21,13 +22,13 @@ const Navbar = async({}) => {
 
                 <div className="hidden md:flex gap-4">
                     <ThemeToggle />
-                    <Link href="/documentation" className={buttonVariants({variants: 'ghost'})}>
+                    <Link href="/documentation" className={buttonVariants({variant: 'ghost'})}>
                         Documentation
                     </Link>
 
                     { session ? (
                         <>
-                            <Link className={buttonVariants({variants: 'ghost'})} href="/dashboard">
+                            <Link className={buttonVariants({variant: 'ghost'})} href="/dashboard">
                                 Dashboard
                             </Link>
                             <SignOutButton />
