@@ -4,8 +4,9 @@ import { getServerSession } from "next-auth";
 import { buttonVariants } from "@/ui/Button";
 import SignInButton from "@/components/SignInButton";
 import SignOutButton from "@/components/SignOutButton";
+import ThemeToggle from "@/components/ThemeToggle";
 
-interface NavbarProps {}
+//interface NavbarProps {}
 
 const Navbar = async({}) => {
     const session = await getServerSession();
