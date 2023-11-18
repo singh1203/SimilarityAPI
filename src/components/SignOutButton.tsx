@@ -3,16 +3,16 @@
 import { FC, useState } from "react";
 import Button from "@/ui/Button";
 import { signOut } from "next-auth/react";
+import { toast } from "@/ui/Toast";
 
 interface SignOutButtonProps {}
 
 const SignOutButton: FC<SignOutButtonProps> = ({}) => {
     const [isLoading , setIsLoading] = useState<boolean>(false);
 
-    const signInWithGoogle = async () => {
-        setIsLoading(true);
-        
+    const signUserOut = async () => {
         try {
+            setIsLoading(true);
             await signOut()
         } catch (error) {
             toast({
@@ -23,13 +23,11 @@ const SignOutButton: FC<SignOutButtonProps> = ({}) => {
         }
     }
 
-    return <Button onClick={signUserOut} isLoading={isLoading}>
-        Sign out
-    </Button>
+    return (
+        <Button onClick={signUserOut} isLoading={isLoading}>
+            Sign out
+        </Button>
+    )
 }
 
 export default SignOutButton;
-
-function toast(arg0: { title: string; message: string; type: string; }) {
-    throw new Error("Function not implemented.");
-}
