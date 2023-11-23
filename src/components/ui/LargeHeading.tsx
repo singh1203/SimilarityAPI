@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import { FC, HTMLAttributes } from 'react'
 import { VariantProps, cva } from 'class-variance-authority'
 import { cn } from '@/lib/util'
 
@@ -24,20 +24,19 @@ interface LargeHeadingProps
         VariantProps<typeof headingVariants> {}
 
 
-// eslint-disable-next-line react/display-name
-const Paragraph = forwardRef<HTMLHeadingElement, LargeHeadingProps>(
-    ({ className, size, children, ...props }, ref) => {
-        return (
-        <h1
-        ref={ref}
-        {...props}
-        className={cn(headingVariants({ size, className }))}>
+const LargeHeading: FC<LargeHeadingProps> = ({
+    children,
+    className,
+    size,
+    ...props
+    }) => {
+    return (
+        <h1 {...props} className={cn(headingVariants({ size, className }))}>
         {children}
         </h1>
-        )
-    }
-)
+    )
+}
 
-Paragraph.displayName = 'Paragraph'
+LargeHeading.displayName = 'LargeHeading'
 
-export default Paragraph;
+export default LargeHeading
