@@ -7,7 +7,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url  	    = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  relationMode = "prisma"
 }
 
 model Account {
@@ -45,8 +47,37 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  ApiKey        ApiKey[]
+  apiKeyId      String?
 }
 
+model ApiKey {
+  id        String  @id @default(cuid())
+  key       String  @unique
+  enabled   Boolean @default(true)
+  User      User    @relation(fields: [userId], references: [id])
+  userId    String
+
+  requests ApiRequest[]
+
+  @@unique([userId, key, enabled])
+}
+
+model ApiRequest {
+  id String @id @default(cuid())
+  timestamp DateTime @default(now())
+  method String 
+  path String
+  status Int
+  duration Int
+
+  usedApiKey String 
+
+  ApiKey ApiKey @relation(fields: [apiKeyId], references: [id])
+  apiKeyId String
+
+  @@index([apiKeyId, timestamp])
+}
 model VerificationToken {
   identifier String
   token      String   @unique
