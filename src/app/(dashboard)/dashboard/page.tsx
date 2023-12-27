@@ -5,6 +5,7 @@ import { authOptions } from '@/lib/auth'
 import { notFound } from 'next/navigation'
 import { db } from '@/lib/db'
 import RequestApiKey from '@/components/RequestApiKey'
+import ApiDashboard from '@/components/ApiDashboard'
 
 export const metadata: Metadata = {
     title: 'Similarity API | Dashboard',
@@ -19,9 +20,16 @@ const page = async () => {
     })
 
 
-    return <div className='max-w-7xl mx-auto mt-16'>
-        {apiKey ? <ApiDashboard /> : <RequestApiKey />}
-    </div>
+    return (
+        <div className='max-w-7xl mx-auto mt-16'>
+        {apiKey ? (
+        // @ts-expect-error Server Component
+            <ApiDashboard /> 
+        ) : (
+             <RequestApiKey />
+        )}
+        </div>
+    )
 }
 
 export default page
