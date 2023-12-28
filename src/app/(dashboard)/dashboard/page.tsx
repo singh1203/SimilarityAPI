@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const page = async () => {
     const user = await getServerSession(authOptions)
-    if(!user) return notFound()
+    if (!user) return notFound()
     const apiKey = await db.apiKey.findFirst({
         where: { userId: user.user.id, enabled: true },
     })
@@ -22,12 +22,11 @@ const page = async () => {
 
     return (
         <div className='max-w-7xl mx-auto mt-16'>
-        {apiKey ? (
-        // @ts-expect-error Server Component
-            <ApiDashboard /> 
-        ) : (
-             <RequestApiKey />
-        )}
+            {apiKey ? (
+                <ApiDashboard />
+            ) : (
+                <RequestApiKey />
+            )}
         </div>
     )
 }
