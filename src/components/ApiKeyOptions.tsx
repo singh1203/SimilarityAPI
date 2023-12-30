@@ -1,15 +1,58 @@
 'use client'
 
 import { FC, useState } from 'react'
-import { DropdownMenu, DropdownMenuTrigger } from '@/ui/DropdownMenu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/ui/DropdownMenu'
 import Button from '@/ui/Button'
 import { Loader2 } from 'lucide-react'
+import { toast } from '@/ui/Toast'
+import { createApiKey } from '@/helpers/create-api-key'
+import { useRouter } from 'next/navigation'
+import { revokeApiKey } from '@/helpers/revoke-api-key'
 
-interface ApiKeyOptionsProps { }
+interface ApiKeyOptionsProps {
+    apiKeyId: string
+    apiKeyK: string
+}
 
-const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ }) => {
+const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ apiKeyId, apiKeyK }) => {
     const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false)
     const [isRevoking, setIsRevoking] = useState<boolean>(false)
+    const router = useRouter()
+
+    const createNewApiKey = async () => {
+        setIsCreatingNew(true)
+
+        try {
+            await revokeApiKey()
+            await createApiKey()
+            router.refresh()
+        } catch (error) {
+            toast({
+                title: 'Error creating API key',
+                message: 'Please try again later.',
+                type: 'error',
+            })
+        } finally {
+            setIsCreatingNew(false)
+        }
+    }
+
+    const revokeCurrentApiKey = async () => {
+        setIsRevoking(true)
+
+        try {
+            await revokeApiKey()
+            router.refresh()
+        } catch (error) {
+            toast({
+                title: 'Error revoking API key',
+                message: 'Please try again later.',
+                type: 'error',
+            })
+        } finally {
+            setIsRevoking(false)
+        }
+    }
 
     return (
         <DropdownMenu>
@@ -23,6 +66,22 @@ const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ }) => {
                     ) : null}
                 </Button>
             </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => {
+                    navigator.clipboard.writeText(apiKeyK)
+                    toast({
+                        title: 'Copied to clipboard',
+                        message: 'The API key has been copied to your clipboard.',
+                        type: 'success'
+                    })
+                }}>
+                    Copy
+                </DropdownMenuItem>
+
+                <DropdownMenuItem onClick={createNewApiKey}>Create new key</DropdownMenuItem>
+
+                <DropdownMenuItem onClick={revokeCurrentApiKey}>Revoke key</DropdownMenuItem>
+            </DropdownMenuContent>
         </DropdownMenu>
     )
 }
