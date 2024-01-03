@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Similarity API App
+
+This project is a Similarity API application built with Next.js 13 and TypeScript. It's designed as a learning tool to understand TypeScript, Next.js source-based structuring, and React component-based pages and layouts.
+
+## Features
+
+- **Rate Limited API routes**: Protect your API from excessive requests.
+- **Protection of sensitive routes**: Secure your application's sensitive information.
+- **Google authentication**: Authenticate users via Google.
+- **Typescript**: Ensure type safety and improve developer tooling.
+- **API key system**: Create and revoke user keys for API access.
+- **Radix UI Primitives**: Utilize a low-level UI component library.
+- **Tailwind CSS**: Style your app with a utility-first CSS framework.
+- **Fonts with next/font**: Optimize web fonts with Next.js.
+- **Icons from Lucide**: Enhance your UI with open-source icons.
+- **Dark mode with next-themes**: Implement dark mode with ease.
+- **Class merging with tailwind-merge**: Combine Tailwind CSS classes.
+- **Animation with tailwindcss-animate**: Animate elements with Tailwind CSS.
+- **Conditional classes with clsx**: Conditionally apply CSS classes.
+- **Variants with class-variance-authority**: Manage variant classes in your application.
+
+## Overview
+
+The application uses a similarity API to compare different inputs and return their similarity score. It's built using the latest version of Next.js (13) and TypeScript for strong typing and enhanced developer experience.
+
+## Project Structure
+
+The project follows a source-based structure, with each page represented by a React component in the `src` directory. The layout of the application is also component-based, promoting reusability and separation of concerns.
+
+## Technologies Used
+
+- **Next.js 13**: The latest version of the Next.js framework, offering features like server-side rendering and static site generation.
+- **TypeScript**: A superset of JavaScript that adds static types, used to ensure type safety and improve developer tooling.
+- **React**: A JavaScript library for building user interfaces, used to create reusable UI components.
 
 ## Getting Started
 
-First, run the development server:
+To get started with this project:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository
+2. Install the dependencies with `npm install`
+3. Start the development server with `npm run dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Learning Outcomes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project is a great way to learn and understand:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- How to set up a Next.js project with TypeScript
+- The benefits of a source-based structure in a Next.js project
+- How to create and use React components for pages and layouts
+- How to work with APIs in a Next.js context
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is open source and available under the [MIT License](LICENSE).
