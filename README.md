@@ -1,6 +1,6 @@
 # Similarity API App
 
-This project is a Similarity API application built with Next.js 13 and TypeScript. It's designed as a learning tool to understand TypeScript, Next.js source-based structuring, and React component-based pages and layouts.
+This project is a Similarity API application built with Next.js and TypeScript. It's designed as a learning tool to understand TypeScript, Next.js source-based structuring, and React component-based pages and layouts.
 
 ## Features
 
