@@ -1,7 +1,7 @@
 import { cosineSimilarity } from "@/helpers/cosine-similarity";
 import { withMethods } from "@/lib/api-middlewares/with-methods";
 import { db } from "@/lib/db";
-import openai from "@/lib/openai";
+import { openai } from "@/lib/openai";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const apiKey = req.headers.authorization;
   if (!apiKey) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({ error: "Missing authorization header" });
   }
 
   try {
@@ -29,19 +29,36 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     if (!validApiKey) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res.status(401).json({ error: "Invalid or disabled API key" });
     }
 
     const start = new Date();
 
     const embeddings = await Promise.all(
       [text1, text2].map(async (text) => {
-        const res = await openai.embeddings.create({
-          model: "text-embedding-ada-002",
-          input: text,
-        });
+        try {
+          const res = await openai.embeddings.create({
+            model: "text-embedding-ada-002",
+            input: text,
+          });
 
-        return res.data[0].embedding;
+          return res.data[0].embedding;
+        } catch (error: any) {
+          if (error.status === 429) {
+            // Handle rate limit error
+            // Wait for 1 minute (60000 milliseconds) before retrying
+            await new Promise(resolve => setTimeout(resolve, 60000));
+            
+            // Retry the request
+            const retryRes = await openai.embeddings.create({
+              model: "text-embedding-ada-002",
+              input: text,
+            });
+
+            return retryRes.data[0].embedding;
+          }
+          throw error;
+        }
       })
     );
 
@@ -62,12 +79,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     return res.status(200).json({ success: true, text1, text2, similarity });
-  } catch (error) {
+  } catch (error: any) {
+    console.error(error); // Log the error to the console
+
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: error.issues });
     }
 
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: error.message || "Internal Server Error" });
   }
 };
 
